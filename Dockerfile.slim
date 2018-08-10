@@ -17,5 +17,7 @@ CMD ["/usr/bin/java", "-version"]
 ADD target/dask-operator-*.jar /dask-operator.jar
 ADD worker-spec.yml /
 ADD start-cluster.py /
+ADD entrypoint.sh /
 
-CMD ["/usr/bin/java", "-Dvertx.cacheDirBase=/tmp", "-jar", "/dask-operator.jar"]
+ENTRYPOINT [ "/entrypoint.sh" ]
+CMD ["/usr/bin/java", "-jar", "/dask-operator.jar"]
