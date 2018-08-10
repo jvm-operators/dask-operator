@@ -115,10 +115,6 @@ Desktop.ini
 # Custom/Project Specific
 ##########################
 
-# generated manifests
-/k8s-spark-operator.yaml
-/openshift-spark-operator.yaml
-
 # oc cluster up
 openshift.local.clusterup
 
