@@ -8,7 +8,8 @@ LABEL BASE_IMAGE="jkremser/mini-jre:8"
 RUN apk --update --no-cache add openjdk8-jre build-base linux-headers \
   && rm -rf /var/cache/apk/*  \
   && rm -rf /usr/lib/libX11* /usr/lib/libp11* /usr/lib/libasound* /usr/lib/libsqlite* /usr/lib/jvm/java-1.8-openjdk/jre/lib/ext/{cldrdata,nashorn}.jar \
-  && pip install dask-kubernetes
+  && pip install dask-kubernetes \
+  && chmod g+w /etc/passwd
 
 ENV JAVA_HOME /usr/lib/jvm/default-jvm
 CMD ["/usr/bin/java", "-version"]

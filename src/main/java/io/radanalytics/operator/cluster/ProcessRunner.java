@@ -25,7 +25,7 @@ public class ProcessRunner {
 
     public static void runCommand(String command) {
         try {
-            String[] commands = new String[] {"sh", "-c", "sh -c \"" + command + "\""};
+            String[] commands = new String[] {"sh", "-c", "\"" + command + "\""};
             log.info("running: {}", Arrays.toString(commands));
             Process p = Runtime.getRuntime().exec(commands);
             BufferedReader in = new BufferedReader(new InputStreamReader(p.getInputStream()));
