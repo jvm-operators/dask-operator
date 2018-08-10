@@ -23,15 +23,9 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <abstract-operator.version>0.2.0</abstract-operator.version>
-        <jython.version>2.7.1b3</jython.version>
     </properties>
 
     <dependencies>
-        <dependency>
-            <groupId>org.python</groupId>
-            <artifactId>jython</artifactId>
-            <version>${jython.version}</version>
-        </dependency>
         <dependency>
             <groupId>io.radanalytics</groupId>
             <artifactId>abstract-operator</artifactId>

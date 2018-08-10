@@ -1,13 +1,9 @@
 package io.radanalytics.operator.cluster;
 
-import io.fabric8.kubernetes.api.model.KubernetesResourceList;
 import io.radanalytics.operator.common.AbstractOperator;
 import io.radanalytics.operator.common.Operator;
-import org.python.util.PythonInterpreter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.Properties;
 
 import static io.radanalytics.operator.common.AnsiColors.*;
 
