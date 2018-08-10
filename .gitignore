@@ -120,3 +120,6 @@ openshift.local.clusterup
 
 
 abstract-operator
+
+Pipfile
+Pipfile.lock
