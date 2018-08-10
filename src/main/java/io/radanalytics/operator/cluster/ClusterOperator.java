@@ -3,8 +3,11 @@ package io.radanalytics.operator.cluster;
 import io.fabric8.kubernetes.api.model.KubernetesResourceList;
 import io.radanalytics.operator.common.AbstractOperator;
 import io.radanalytics.operator.common.Operator;
+import org.python.util.PythonInterpreter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.Properties;
 
 import static io.radanalytics.operator.common.AnsiColors.*;
 
@@ -21,9 +24,27 @@ public class ClusterOperator extends AbstractOperator<ClusterInfo> {
     }
 
     protected void onAdd(ClusterInfo cluster) {
-        KubernetesResourceList list = getDeployer().getResourceList(cluster);
-        client.resourceList(list).createOrReplace();
-        clusters.put(cluster);
+        ProcessRunner.runPythonScript("/start-cluster.py");
+
+//        Properties props = new Properties();
+//        props.put("python.home","/usr/local/lib/python2.7/site-packages");
+//        props.put("python.console.encoding", "UTF-8"); // Used to prevent: console: Failed to install '': java.nio.charset.UnsupportedCharsetException: cp0.
+//        props.put("python.security.respectJavaAccessibility", "false"); //don't respect java accessibility, so that we can access protected members on subclasses
+//        props.put("python.import.site","false");
+//
+//        Properties preprops = System.getProperties();
+//
+//        PythonInterpreter.initialize(preprops, props, new String[0]);
+//
+//        PythonInterpreter interpreter = new PythonInterpreter();
+//        interpreter.exec("import sys; sys.path.append('/usr/local/lib/python2.7/site-packages')\n" +
+//                "from dask_kubernetes import KubeCluster\n" +
+//                "cluster = KubeCluster.from_yaml('/worker-spec.yml')\n" +
+//                "cluster.scale_up(2)\n");
+
+//        KubernetesResourceList list = getDeployer().getResourceList(cluster);
+//        client.resourceList(list).createOrReplace();
+//        clusters.put(cluster);
     }
 
     protected void onDelete(ClusterInfo cluster) {

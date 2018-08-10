@@ -1,11 +1,21 @@
-#FROM openjdk:8-jre-slim
-#FROM java:openjdk-8-jre-alpine
-FROM jkremser/mini-jre:8.1
+FROM python:3.6-alpine
 
 ENV JAVA_OPTS="-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap"
 
 LABEL BASE_IMAGE="jkremser/mini-jre:8"
 
-ADD target/spark-operator-*.jar /spark-operator.jar
+# todo remove build-base linux-headers and create new base image to speed-up the build process
+RUN apk --update --no-cache add openjdk8-jre build-base linux-headers \
+  && rm -rf /var/cache/apk/*  \
+  && rm -rf /usr/lib/libX11* /usr/lib/libp11* /usr/lib/libasound* /usr/lib/libsqlite* /usr/lib/jvm/java-1.8-openjdk/jre/lib/ext/{cldrdata,nashorn}.jar \
+  && pip install dask-kubernetes
 
-CMD ["/usr/bin/java", "-Dvertx.cacheDirBase=/tmp", "-jar", "/spark-operator.jar"]
+ENV JAVA_HOME /usr/lib/jvm/default-jvm
+CMD ["/usr/bin/java", "-version"]
+
+
+ADD target/dask-operator-*.jar /dask-operator.jar
+ADD worker-spec.yml /
+ADD start-cluster.py /
+
+CMD ["/usr/bin/java", "-Dvertx.cacheDirBase=/tmp", "-jar", "/dask-operator.jar"]
