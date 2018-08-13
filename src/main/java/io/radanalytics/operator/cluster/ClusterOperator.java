@@ -1,5 +1,7 @@
 package io.radanalytics.operator.cluster;
 
+import io.fabric8.kubernetes.api.model.apiextensions.CustomResourceDefinition;
+import io.fabric8.kubernetes.api.model.apiextensions.CustomResourceDefinitionBuilder;
 import io.radanalytics.operator.common.AbstractOperator;
 import io.radanalytics.operator.common.Operator;
 import org.slf4j.Logger;
@@ -20,7 +22,19 @@ public class ClusterOperator extends AbstractOperator<ClusterInfo> {
     }
 
     protected void onAdd(ClusterInfo cluster) {
-        ProcessRunner.runPythonScript("/start-cluster.py");
+        CustomResourceDefinition crd = new CustomResourceDefinitionBuilder()
+                .withApiVersion("apiextensions.k8s.io/v1beta1")
+                .withNewMetadata().withName("foos.radanalytics.io")
+                .endMetadata()
+                .withNewSpec().withNewNames().withKind("Foo").withPlural("foos").endNames().withGroup("radanalytics.io")
+                .withVersion("v1")
+                .withScope("Namespaced")
+                .endSpec()
+                .build();
+        client.customResourceDefinitions().createOrReplace(crd);
+
+
+//        ProcessRunner.runPythonScript("/start-cluster.py");
 
 //        Properties props = new Properties();
 //        props.put("python.home","/usr/local/lib/python2.7/site-packages");

@@ -1,0 +1,4 @@
+apiVersion: radanalytics.io/v1
+kind: Foo
+metadata:
+  name: my-foo
