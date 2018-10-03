@@ -37,7 +37,7 @@ public class ProcessRunner {
             }
             String stdOutput = sb.toString();
             if (!stdOutput.isEmpty()) {
-                log.info("{}{}{}", ANSI_G, stdOutput, ANSI_RESET);
+                log.info("{}{}{}", gr(), stdOutput, xx());
             }
             in.close();
 
@@ -47,7 +47,7 @@ public class ProcessRunner {
             }
             String errOutput = sb.toString();
             if (!errOutput.isEmpty()) {
-                log.error("{}{}{}", ANSI_R, stdOutput, ANSI_RESET);
+                log.error("{}{}{}", re(), stdOutput, xx());
             }
             err.close();
         } catch (IOException e) {
